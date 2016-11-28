@@ -11,7 +11,7 @@ class Food {
   }
   void foodEaten() {
     if (get(x, y)== color(0, 123, 0)) {
-      //delay(2);
+      delay(2);
       x= (int) random(350);
       y= (int) random (550);
     }

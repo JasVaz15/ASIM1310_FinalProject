@@ -24,8 +24,7 @@ void draw() {
   food.display();
   snake.drawSnake();
   food.foodEaten();
-  //snake.moveSnake(); will be updated later
-  snake.changeSpeed();
+  snake.moveSnake(); 
   snake.edgeDetection();
   snake.grow();
 }
