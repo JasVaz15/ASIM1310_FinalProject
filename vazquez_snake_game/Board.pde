@@ -1,15 +1,17 @@
 class Board {
-  float x=0;
-  float y=0;
-  float size= 30;
+  int w=30;
+  int h=30;
+  int squareSize=20;
 
-  Board(float newX, float newY, float newSize) {
-    x=newX;
-    y= newY;
-    size= newSize;
+
+  Board() {
   }
-  void drawSquares() {
-    fill(255);
-    rect( x, y, size, size);
+
+  void displayBoard() {
+    background(255);
+    for ( int i=0; i<w; i++)
+      line (i* squareSize, 0, i*squareSize, height);
+    for (int i=0; i< h; i++)
+      line( 0, i*squareSize, width, i*squareSize);
   }
 }

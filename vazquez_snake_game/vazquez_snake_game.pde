@@ -1,30 +1,19 @@
-Snake snake= new Snake (200, 300);
-int r= (int)random (300); // location for food
-Food food= new Food(r, r);
-int rows=20;
-int cols=30;
-Board [][] setUpBoard= new Board [cols][rows]; 
-float sSize= 20;
+/* 
+Final Project: Snake Game 
+This version replacing my original Snake Game implements the ArrayList class to
+create the board and also plays a major role in the display and function of the snake.
+The snake class extends the board class sharing some charactersitics necessary for its
+own display. 
+*/
 
-void setup() {
-  size(400, 600);
-  for (int i=0; i< cols; i++) {
-    for (int j=0; j<rows; j++) {
-      setUpBoard [i][j]= new Board (j*sSize, i*sSize, sSize);
-    }
-  }
+
+Board board= new Board();
+Snake snake= new Snake();
+void setup(){
+  size(600,600);
 }
 
-void draw() {
-  for (int i=0; i<cols; i++) {
-    for (int j=0; j<rows; j++) {
-      setUpBoard [i][j].drawSquares();
-    }
-  }
-  food.display();
-  snake.drawSnake();
-  food.foodEaten();
-  snake.moveSnake(); 
-  snake.edgeDetection();
-  snake.grow();
+void draw(){
+  board.displayBoard();
+  snake.displaySnake();
 }

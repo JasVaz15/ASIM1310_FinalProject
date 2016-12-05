@@ -1,89 +1,42 @@
-class Snake { // will be implementing ArrayList in future commits
-  int l= 20;
-  int w=20;
-  int x=0;
-  int y=0;
-  int speedX= 2;
-  int speedY= 5;
-  int snakeMoveTimer=0;
-  int snakeMoveDelay=4;
+class Snake extends Board {
+  ArrayList<Integer>x= new ArrayList<Integer>(), y= new ArrayList<Integer>();
+  int direction= 2;
+  int [] directionX= {0, 0, 1, -1}, directionY= {1, -1, 0, 0};
 
 
 
-  Snake ( int newX, int newY) {
-    x= newX;
-    y= newY;
+  Snake() {
+    x.add(5);
+    y.add(5);
   }
-  void drawSnake() {
-    fill(0, 123, 0);
-    rect(x, y, l, w);
+  void displaySnake() {
+    super.displayBoard();
+    for (int i=0; i< x.size(); i++) {
+      fill(0, 255, 0);
+      rect(x.get(i)*squareSize, y.get(i)*squareSize, squareSize, squareSize);
+    }
+    moveSnake();
   }
-  void moveSnake() { //working on it turning around more clearly 
-      if (keyPressed) {
-        if (key== CODED) {
-          if (keyCode== UP) {
-            y-=5;
-          }
-          if (keyCode== DOWN) {
-            y+=5;
-          }
-          if (keyCode== LEFT) {
-            x-=5;
-          }
-          if (keyCode== RIGHT) {
-            x+=5;
-          }
-        }
+
+  void moveSnake() {
+    if (frameCount%6==0) {
+      if (keyCode== UP) {
+        y.add(0, y.get(0)-1);
+        x.add(0, x.get(0));
+      } else if (keyCode==DOWN) {
+        y.add(0, y.get(0)+1);
+        x.add(0, x.get(0));
+      } else if (keyCode==LEFT) {
+        x.add(0, x.get(0)-1);
+        y.add(0, y.get(0));
+      } else if (keyCode==RIGHT) {
+        x.add(0, x.get(0)+1);
+        y.add(0, y.get(0));
       }
-  }
-
-  void grow() {
-    if (get(x, y)== color(255, 0, 0)) {
-      l=l+1;
+      if (keyCode==UP || keyCode==DOWN || keyCode== LEFT || keyCode==RIGHT) {
+        x.remove(x.size()-1);
+        y.remove(y.size()-1);
+      }
     }
-  }
-  void edgeDetection() { //needs to provide smooth turn around
-    if (rightCollision() || leftCollision()) {
-      x=-x;
-    }
-    if (bottomCollision() || topCollision()) {
-      y=-y;
-    }
-  }
-  boolean rightCollision() {
-    boolean hit= false;
-    if (x+ (w/2) >= width) {
-      hit= true;
-    } else {
-      hit=false;
-    }
-    return hit;
-  }
-  boolean leftCollision() {
-    boolean hit= false;
-    if (x<0+(w/2)) {
-      hit= true;
-    } else {
-      hit= false;
-    } 
-    return hit;
-  }
-  boolean bottomCollision() {
-    boolean hit=false;
-    if (y>height-(w/2)) {
-      hit= true;
-    } else {
-      hit= false;
-    }
-    return hit;
-  }
-  boolean topCollision() {
-    boolean hit=false;
-    if (y<0+(w/2)) {
-      hit= true;
-    } else {
-      hit= false;
-    }
-    return hit;
   }
 }
