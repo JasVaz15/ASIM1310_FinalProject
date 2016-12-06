@@ -1,9 +1,8 @@
 class Snake extends Board {
   ArrayList<Integer>x= new ArrayList<Integer>(), y= new ArrayList<Integer>();
-  int direction= 2;
-  int [] directionX= {0, 0, 1, -1}, directionY= {1, -1, 0, 0};
-
-
+  int appleX=20;
+  int appleY=15;
+  boolean gameOver= false; 
 
   Snake() {
     x.add(5);
@@ -16,27 +15,64 @@ class Snake extends Board {
       rect(x.get(i)*squareSize, y.get(i)*squareSize, squareSize, squareSize);
     }
     moveSnake();
+    
   }
 
   void moveSnake() {
-    if (frameCount%6==0) {
-      if (keyCode== UP) {
-        y.add(0, y.get(0)-1);
-        x.add(0, x.get(0));
-      } else if (keyCode==DOWN) {
-        y.add(0, y.get(0)+1);
-        x.add(0, x.get(0));
-      } else if (keyCode==LEFT) {
-        x.add(0, x.get(0)-1);
-        y.add(0, y.get(0));
-      } else if (keyCode==RIGHT) {
-        x.add(0, x.get(0)+1);
-        y.add(0, y.get(0));
+    if (!gameOver) {
+      displayApple();
+      if (frameCount%6==0) {
+        if (keyCode== UP) {
+          y.add(0, y.get(0)-1);
+          x.add(0, x.get(0));
+        } else if (keyCode==DOWN) {
+          y.add(0, y.get(0)+1);
+          x.add(0, x.get(0));
+        } else if (keyCode==LEFT) {
+          x.add(0, x.get(0)-1);
+          y.add(0, y.get(0));
+        } else if (keyCode==RIGHT) {
+          x.add(0, x.get(0)+1);
+          y.add(0, y.get(0));
+        }
+        if (x.get(0)<0 || y.get(0)<0 || x.get(0)>= w|| y.get(0) >=h){
+          gameOver=true;
+        }
+        for( int i=1; i< x.size(); i++){
+          if (x.get(0)==x.get(i) && y.get(0)==y.get(i)){
+            gameOver=true;
+          }
+        }
+        if (x.get(0)==appleX && y.get(0)==appleY) {
+          appleX= int (random(0, w));
+          appleY= int (random(0, h));
+        } else if (keyCode==UP || keyCode==DOWN || keyCode== LEFT || keyCode==RIGHT) {
+          x.remove(x.size()-1);
+          y.remove(y.size()-1);
+        }
       }
-      if (keyCode==UP || keyCode==DOWN || keyCode== LEFT || keyCode==RIGHT) {
-        x.remove(x.size()-1);
-        y.remove(y.size()-1);
+    }else {
+      background(0);
+      stroke (255);
+      textSize(80);
+      textAlign (CENTER);
+      text("GAME OVER", width/2, height/2);
+      textSize(20);
+      text("PRESS SPACE BAR TO CONTINUE", width/2, height/2+20);
+      if(keyPressed&&key==' '){
+        x.clear();
+        y.clear();
+        x.add(5);
+        y.add(5);
+        appleX= int(random(0,w));
+        appleY= int(random(0,h));
+        gameOver=false;
       }
+      
     }
+  }
+  void displayApple() {
+    fill(255, 0, 0);
+    rect(appleX*squareSize, appleY*squareSize, squareSize, squareSize);
   }
 }
