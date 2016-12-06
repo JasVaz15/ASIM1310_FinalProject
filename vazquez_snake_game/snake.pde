@@ -1,7 +1,8 @@
 class Snake extends Board {
   ArrayList<Integer>x= new ArrayList<Integer>(), y= new ArrayList<Integer>();
-  int appleX=20;
-  int appleY=15;
+  int appleX=10;
+  int appleY=10;
+  int score= 0;
   boolean gameOver= false; 
 
   Snake() {
@@ -46,6 +47,8 @@ class Snake extends Board {
         if (x.get(0)==appleX && y.get(0)==appleY) {
           appleX= int (random(0, w));
           appleY= int (random(0, h));
+          score++;
+          
         } else if (keyCode==UP || keyCode==DOWN || keyCode== LEFT || keyCode==RIGHT) {
           x.remove(x.size()-1);
           y.remove(y.size()-1);
@@ -53,12 +56,15 @@ class Snake extends Board {
       }
     }else {
       background(0);
-      stroke (255);
-      textSize(80);
+      textAlign(CENTER, TOP);
+      textSize(30);
+      text("score:", width/2-10,20);
+      text(score, width/2+50, 20);
       textAlign (CENTER);
+      textSize(80);
       text("GAME OVER", width/2, height/2);
       textSize(20);
-      text("PRESS SPACE BAR TO CONTINUE", width/2, height/2+20);
+      text("PRESS SPACE BAR TO PLAY AGAIN", width/2, height/2+20);
       if(keyPressed&&key==' '){
         x.clear();
         y.clear();
@@ -66,6 +72,7 @@ class Snake extends Board {
         y.add(5);
         appleX= int(random(0,w));
         appleY= int(random(0,h));
+        score=0;
         gameOver=false;
       }
       
