@@ -3,7 +3,6 @@ class Board {
   int h=30;
   int squareSize=20;
 
-
   Board() {
   }
 
